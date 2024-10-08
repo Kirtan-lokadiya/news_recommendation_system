@@ -1,0 +1,192 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+p {
+    color: #666;
+}
+
+/* Navbar Styles */
+nav {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between; /* This spreads out the items */
+    align-items: center;
+    flex-wrap: wrap; /* Allows items to wrap on small screens */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap; /* Ensure it wraps when there's not enough space */
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+/* Aligning login/logout button */
+.login-button {
+    margin-left: auto; /* Push the login/logout button to the right */
+}
+
+nav .login-button a {
+    background-color: #4CAF50;
+    padding: 8px 16px;
+    border-radius: 4px;
+    color: white;
+    text-decoration: none;
+}
+
+nav .login-button a:hover {
+    background-color: #45a049;
+}
+
+/* Media Queries for Navbar Responsiveness */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* Stack the navigation links vertically */
+        width: 100%;
+    }
+
+    .login-button {
+        width: 100%;
+        margin: 10px 0;
+        text-align: center;
+    }
+}
+
+/* News Card Styles */
+.news-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.news-card h2 {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.news-card p {
+    color: #666;
+    margin: 10px 0;
+}
+
+.news-card a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.news-card a:hover {
+    text-decoration: underline;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Adjust spacing between items */
+}
+
+.news-card {
+    flex: 0 1 30%; /* Each card takes up approximately 30% of the container width */
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .news-card {
+        flex: 0 1 45%; /* On smaller screens, show two items per row */
+    }
+}
+
+@media (max-width: 500px) {
+    .news-card {
+        flex: 0 1 100%; /* On small screens, show one item per row */
+    }
+}
+
+/* Flash messages */
+.flash-messages {
+    background-color: #ffdddd;
+    color: red;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.flash-messages li {
+    list-style-type: none;
+}
+
+/* Form Styles */
+form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
