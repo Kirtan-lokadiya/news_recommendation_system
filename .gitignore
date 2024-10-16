@@ -9,6 +9,8 @@ __pycache__/
 
 venv/
 venv_py311/
+tree.txt
+lightning_logs
 
 # Distribution / packaging
 .Python
