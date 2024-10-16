@@ -25,7 +25,7 @@ class ModelTrainingPipeline:
                                      ind2item= ind2item,
                                      ind2user= ind2user)
         model_trainer.model_training_2()
-        
+        model_trainer.run();
         
 
 

@@ -6,7 +6,11 @@
     <h1>{{ full_news[0].title }}</h1>
     <p>{{ full_news[0].abstract }}</p>
 
-    <h3>Also Recommended</h3>
+    <!-- Added centered class for the "Also Recommended" heading -->
+    <div class="centered"> 
+        <h3>Also Recommended</h3>
+    </div>
+
     {% if content_recc %}
         <div class="content">
             {% for news in content_recc %}

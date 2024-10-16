@@ -12,6 +12,14 @@
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('category', category='lifestyle') }}">Lifestyle</a></li>
             <li><a href="{{ url_for('category', category='health') }}">Health</a></li>
+            <li><a href="{{ url_for('category', category='weather') }}">Weather</a></li> 
+            <li><a href="{{ url_for('category', category='sports') }}">Sports</a></li> 
+            <li><a href="{{ url_for('category', category='entertainment') }}">Entertainment</a></li> 
+            <li><a href="{{ url_for('category', category='travel') }}">Travel</a></li> 
+            <li><a href="{{ url_for('category', category='finance') }}">Finance</a></li> 
+            <li><a href="{{ url_for('category', category='foodanddrink') }}">Food & Drink</a></li> 
+            <li><a href="{{ url_for('category', category='movies') }}">Movies</a></li> 
+            <li><a href="{{ url_for('category', category='music') }}">Music</a></li> 
         </ul>
         <div class="login-button">
             {% if session.get('user_logged_in') %}

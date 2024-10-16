@@ -12,12 +12,14 @@
     <form method="post" action="{{ url_for('signup') }}">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
-
+<br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
 
         <button type="submit">Signup</button>
+    <p>Already registered? <a href="{{ url_for('login') }}" style="color: white;">Login here</a>.</p>
+
     </form>
 
-    <p>Already registered? <a href="{{ url_for('login') }}">Login here</a>.</p>
+
 {% endblock %}

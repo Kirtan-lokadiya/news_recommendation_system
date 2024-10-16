@@ -1,5 +1,6 @@
 #  Components
 
+
 import os
 from typing import Any
 from pathlib import Path
@@ -13,15 +14,16 @@ from torch.utils.data import Dataset, DataLoader
 import torch
 import joblib
 import ktrain
+from sklearn.metrics import precision_score, recall_score, f1_score
+import numpy as np
 
 from News_Recommendation_System.entity.config_entity import ModelTrainerConfig
 
 
 class MindDataset(Dataset):
-    # A fairly simple torch dataset module that can take a pandas dataframe (as above), 
-    # and convert the relevant fields into a dictionary of arrays that can be used in a dataloader
+
     def __init__(self, df):
-        # Create a dictionary of tensors out of the dataframe
+
         self.data = {
             'userIdx' : torch.tensor(df.userIdx.values),
             'click' : torch.tensor(df.click.values),
@@ -38,7 +40,7 @@ class NewsMF(pl.LightningModule):
     def __init__(self, num_users, num_items, dim = 10):
         super().__init__()
         self.dim=dim
-        self.useremb = nn.Embedding(num_embeddings=num_users, embedding_dim=dim)
+        self.useremb = nn.Embedding(num_embeddings=num_users, embedding_dim=dim)  #convert into vector
         self.itememb = nn.Embedding(num_embeddings=num_items, embedding_dim=dim)
     
     def forward(self, user, item):
@@ -46,7 +48,7 @@ class NewsMF(pl.LightningModule):
         uservec = self.useremb(user)
         itemvec = self.itememb(item)
 
-        score = (uservec*itemvec).sum(-1).unsqueeze(-1)
+        score = (uservec*itemvec).sum(-1).unsqueeze(-1)  #required when working with batch-based computations, where each score needs to be represented as a 2D tensor (e.g., for further processing or loss calculation).
         
         return score
     
@@ -62,7 +64,7 @@ class NewsMF(pl.LightningModule):
         return loss
     
     def validation_step(self, batch, batch_idx):
-        # for now, just do the same computation as during training
+    
         loss = self.training_step(batch, batch_idx)
         self.log("val_loss", loss, prog_bar=True, on_step=False, on_epoch=True)
         return loss
@@ -78,7 +80,7 @@ class ModelTrainer:
         self.config = config
 
     def get_data(self):
-        train = pd.read_csv(self.config.train_data_path, sep= '\t')
+        train = pd.read_csv(self.config.train_data_path, sep= '\t') #read tsv file 
         valid = pd.read_csv(self.config.test_data_path, sep= '\t')
 
         return train, valid
@@ -97,7 +99,7 @@ class ModelTrainer:
         ds_valid = MindDataset(valid)
         valid_loader = DataLoader(ds_valid, batch_size=bs, shuffle=False)
 
-        # batch = next(iter(train_loader))
+     
         
         return train_loader, valid_loader
     
@@ -125,3 +127,45 @@ class ModelTrainer:
 
         joblib.dump(tm, os.path.join(self.config.root_dir, self.config.model_content))   #user based recommend
 
+    def model_evaluation(self, valid_loader, ind2item, ind2user):
+        # Load the trained model
+        mf_model = joblib.load(os.path.join(self.config.root_dir, self.config.model_name))
+
+        all_preds = []
+        all_labels = []
+
+        for batch in valid_loader:
+            user_idx = batch['userIdx']
+            click_idx = batch['click']
+
+            # Get model prediction for clicked items
+            preds = mf_model(user_idx, click_idx).detach().cpu().numpy()
+
+            # Assuming binary classification for clicked vs not clicked items
+            all_preds.extend(np.argmax(preds, axis=1))
+            all_labels.extend([1] * len(click_idx))  # True label for clicked items
+        
+        # Now calculate precision, recall, and F1-score
+        precision = precision_score(all_labels, all_preds)
+        
+        recall = recall_score(all_labels, all_preds)
+        f1 = f1_score(all_labels, all_preds)
+
+        print(f"Precision: {precision}, Recall: {recall}, F1 Score: {f1}")
+    
+    def run(self):
+        # Load data
+        train, valid = self.get_data()
+        train_loader, valid_loader = self.build_datasets(train, valid)
+        
+        # Get hash mappings for users and items
+        ind2item, ind2user = self.get_hashes()
+
+        # Train the model
+        self.model_training(train_loader, valid_loader, ind2item, ind2user)
+
+        # Evaluate the model
+        self.model_evaluation(valid_loader, ind2item, ind2user)
+
+
+       

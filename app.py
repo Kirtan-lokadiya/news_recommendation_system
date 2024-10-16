@@ -131,7 +131,7 @@ def personalized(username, category=None):
 #         return jsonify({"error": "Missing userId, clicked_news, or impressions"}), 400
 
 #     # Fetch the user's interaction data
-#     user_interaction = user_interactions_collection.find_one({"userId": user_id})
+#     user_interaction = user_interactions_collection.find_one({"userId": user•••••_id})
 
 #     if not user_interaction:
 #         return jsonify({"error": "User not found"}), 404

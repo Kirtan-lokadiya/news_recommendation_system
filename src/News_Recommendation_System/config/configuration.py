@@ -61,7 +61,9 @@ class ConfigurationManager:
 
     def get_model_trainer_config(self) -> ModelTrainerConfig:
         config = self.config.model_trainer
-        params = self.params.Behaviour_model
+        params = self.params.Behaviour_model   # Behaviour_model:
+                                                    
+                                                    #batch_size: 1024
         
 
         create_directories([config.root_dir])
