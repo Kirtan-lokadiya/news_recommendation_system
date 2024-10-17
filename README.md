@@ -39,7 +39,7 @@ python3 -m venv venv
 ### Step 3: Activate the Virtual Environment
 Activate the virtual environment to start working on the project.
 
-source venv/bin/activate
+source venv/bin/activate (for linux only)
 
 ### Step 4: Install Dependencies
 Install all the necessary libraries and packages for the project using the provided requirements.txt file.
